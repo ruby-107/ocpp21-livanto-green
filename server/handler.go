@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	utils "ocpp21-livantogreen"
 	"strings"
-	"time"
 
 	"ocpp21-livantogreen/internal/database"
 	"ocpp21-livantogreen/internal/ocpp"
@@ -103,7 +103,7 @@ func (s *Server) handleCall(
 		if station.ChargingStation.Model == "" ||
 			station.ChargingStation.VendorName == "" {
 			return s.sendResult(conn, messageID, map[string]any{
-				"currentTime": time.Now().UTC().Format(time.RFC3339),
+				"currentTime": utils.GetISTTimestamp(),
 				"interval":    30,
 				"status":      "Rejected",
 			})
@@ -121,7 +121,7 @@ func (s *Server) handleCall(
 		log.Println("BootNotification saved:", stationID)
 
 		response = map[string]any{
-			"currentTime": time.Now().UTC().Format(time.RFC3339),
+			"currentTime": utils.GetISTTimestamp(),
 			"interval":    30,
 			"status":      "Accepted",
 		}
@@ -134,7 +134,7 @@ func (s *Server) handleCall(
 		log.Println("💓 Heartbeat received:", stationID)
 
 		response = map[string]any{
-			"currentTime": time.Now().UTC().Format(time.RFC3339),
+			"currentTime": utils.GetISTTimestamp(),
 		}
 
 	case "StatusNotification":

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	utils "ocpp21-livantogreen"
 	"strconv"
 	"time"
 
@@ -72,7 +73,7 @@ func main() {
 
 	// 2. StatusNotification
 	status := map[string]any{
-		"timestamp":       time.Now().UTC().Format(time.RFC3339),
+		"timestamp":       utils.GetISTTimestamp(),
 		"connectorStatus": "Available",
 		"evseId":          1,
 		"connectorId":     1,
